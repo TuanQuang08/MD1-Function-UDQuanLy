@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        input {
+            width: 30%;
+            height: 20px;
+            padding: 10px;
+            border-radius: 5px;
+            border: 1px solid gray;
+        }
+
+        button {
+            width: 80px;
+            height: 43px;
+            padding: 10px;
+            border-radius: 5px;
+            border: none;
+            color: white;
+            background-color: cornflowerblue;
+            cursor: pointer;
+        }
+
+        table {
+            width: 60%;
+            text-align: left;
+        }
+
+        td {
+            padding: 5px;
+        }
+        table td:first-child{
+            width: 40px;
+            text-align: center;
+        }
+        .mystyle{
+            background-color: #dbdbdb;
+        }
+    </style>
+</head>
+
+<body onload="loadAllItem()">
+<h2>Add New Product</h2>
+<input type="text" id="addItem" placeholder="New Product">
+<button type="button" onclick="addItem(),loadAllItem()">Add</button>
+<br><br><br>
+<h2>Display All Product</h2>
+<table id="tableMain">
+</table>
+
+</body>
+<script>
+    let arr = ['Iphone 4', 'Iphone 5','Sony Xperia','Samsung Galaxy','Nokia 6'];
+    function getEle(id) {
+        return document.getElementById(id);
+    }
+    function addData(data, index, count) {
+        if(count % 2 === 0){
+            data += "<tr class='mystyle'>";
+        }else{
+            data += "<tr>";
+        }
+        data += "<td>" + count + "</td>";
+        data += "<td colspan='2'>" + arr[index] + "</td>";
+        data += "<td><button type='button' value='"+ index +"' onclick='editItem(this.value)'>" + "Edit" + "</button></td>";
+        data += "<td><button type='button' value='"+ index +"' onclick='deleteItem(this.value)'>" + "Delete" + "</button></td>";
+        data += "</tr>";
+        return data;
+    }
+    function addItem() {
+        let inputItem = getEle('addItem').value;
+        arr.push(inputItem);
+        let data = "";
+        addData(data, arr.length - 1, arr.length);
+        getEle('tableMain').innerHTML += data;
+    }
+    function loadAllItem() {
+        let data = "";
+        let count = 1;
+        for (let i = 0; i < arr.length; i++) {
+            data = addData(data, i, count);
+            count++;
+        }
+        getEle('tableMain').innerHTML = data;
+    }
+    function editItem(index) {
+        let newItem = prompt("Nhập dữ liệu muốn thay đổi: ");
+        arr[index] = newItem;
+        loadAllItem();
+    }
+    function deleteItem(index) {
+        arr.splice(index,1);
+        loadAllItem();
+    }
+</script>
+</html>
